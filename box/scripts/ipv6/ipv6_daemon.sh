@@ -6,8 +6,10 @@
 # Author: flyflas
 # Version: 1.0
 # Description: Guardian script for ipv6_monitor.sh.
-#              This script can restart ipv6_monitor.sh when ipv6_monitor.sh exits for some reason
-#              Executed every 5 minutes. You can change the time interval between running the script in crontab (box.iptables box_run_crontab)
+#              This script can restart ipv6_monitor.sh when ipv6_monitor.sh exits  
+#                 for some reason
+#              Executed every 5 minutes. You can change the time interval between 
+#                 running the script in crontab (box.iptables box_run_crontab)
 #################################################################################
 
 source /data/adb/box/settings.ini

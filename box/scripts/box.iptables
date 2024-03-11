@@ -719,7 +719,7 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
       cleanup_iptables
       case "${network_mode}" in
         tproxy)
-          ${box_dir}/scripts/ipv6/ipv6_stop.sh
+          ${box_dir}/scripts/ipv6/ipv6_monitor_stop.sh
           log Info "Using Tproxy: tcp + udp."
           log Info "Creating iptables transparent proxy rules."
           iptables="iptables -w 64"
@@ -787,7 +787,7 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
       log Warning "Cleaning up iptables transparent proxy rules done."
 
       if [ "${ipv6}" = "true" ] && [ "$network_mode" = "tproxy" ] && [ "$bin_name" = "clash" ]; then
-        ${box_dir}/scripts/ipv6/ipv6_stop.sh
+        ${box_dir}/scripts/ipv6/ipv6_monitor_stop.sh
       fi
       ;;
     *)

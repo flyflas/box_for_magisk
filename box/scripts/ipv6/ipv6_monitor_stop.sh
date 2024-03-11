@@ -6,7 +6,8 @@
 # Author: flyflas
 # Version: 1.0
 # Description: Script to terminate ipv6_monitor.sh
-#              When box_for_magisk needs to restart or exit, this script is used to end the ipv6_monitor.sh process.
+#              When box_for_magisk needs to restart or exit, this script is used 
+#                   to kill the ipv6_monitor.sh process.
 #################################################################################
 
 
