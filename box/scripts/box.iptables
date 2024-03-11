@@ -661,6 +661,9 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
             ipv6_enable
             iptables="ip6tables -w 64"
             start_tproxy && log Info "Creating ip6tables transparent proxy rules done." || { log Error "Creating ip6tables transparent proxy rules failed." && stop_tproxy >> /dev/null 2>&1; }
+            
+            # start ipv6_monitor.sh
+            busybox nohup ${box_dir}/scripts/ipv6/ipv6_monitor.sh &
           else
             disable_ipv6
             log Warning "Disabling IPv6."
@@ -716,6 +719,7 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
       cleanup_iptables
       case "${network_mode}" in
         tproxy)
+          ${box_dir}/scripts/ipv6/ipv6_stop.sh
           log Info "Using Tproxy: tcp + udp."
           log Info "Creating iptables transparent proxy rules."
           iptables="iptables -w 64"
@@ -725,6 +729,9 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
             ipv6_enable
             iptables="ip6tables -w 64"
             start_tproxy && log Info "Creating ip6tables transparent proxy rules done." || { log Error "Creating ip6tables transparent proxy rules failed." && stop_tproxy >> /dev/null 2>&1; }
+            
+            busybox nohup ${box_dir}/scripts/ipv6/ipv6_monitor.sh &
+
           else
             disable_ipv6
             log Warning "Disabling IPv6."
@@ -778,6 +785,10 @@ if [[ "${network_mode}" == @(redirect|mixed|tproxy) ]]; then
       # cleanup iptables ipv4/6
       cleanup_iptables
       log Warning "Cleaning up iptables transparent proxy rules done."
+
+      if [ "${ipv6}" = "true" ] && [ "$network_mode" = "tproxy" ] && [ "$bin_name" = "clash" ]; then
+        ${box_dir}/scripts/ipv6/ipv6_stop.sh
+      fi
       ;;
     *)
       echo "${red}$0 $1 no found${normal}"

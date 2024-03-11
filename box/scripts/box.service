@@ -44,6 +44,12 @@ box_run_crontab() {
   busybox crontab -c "${box_run}" -r
   touch "${box_run}/root"
   chmod 0755 "${box_run}/root"
+  
+  # set ipv6_daemon.sh
+  if [ "${ipv6}" = "true" ] && [ "$network_mode" = "tproxy" ] && [ "$bin_name" = "clash" ]; then
+    log Info "Crontab: create ipv6.monitor job"
+    echo "5 * * * * ${box_dir}/scripts/ipv6/ipv6_daemon.sh" >>"${box_run}/root"
+  fi
 
   if [ "${run_crontab}" = "true" ]; then
     log Debug "Cron job enabled"
