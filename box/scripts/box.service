@@ -620,7 +620,7 @@ start_box() {
   fi
 
   # Execute box_run_crontab if run_crontab is not equal to "false"
-  [ "${run_crontab}" = "true" ] && box_run_crontab || log Info "crontab disabled."
+  box_run_crontab 
 
   # Execute the box_cgroup, box_run_bin, box_detected_port, box_bin_alive,box_bin_status functions
   box_run_bin
